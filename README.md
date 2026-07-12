@@ -29,7 +29,7 @@ npm ci
 npm run dev
 
 # Full stack — configure root .env, then:
-local/docker-up.cmd      # Windows (see local/README.md)
+local/docker-up.cmd      # Windows
 local/docker-up.sh       # WSL / Linux
 ```
 
