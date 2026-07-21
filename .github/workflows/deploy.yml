@@ -79,21 +79,21 @@ jobs:
       - name: Build and push backend
         run: |
           image="$ECR_REGISTRY/codecanary/backend"
-          docker build -t "$image:$IMAGE_TAG" -t "$image:latest" -f backend/Dockerfile backend/
+          docker build -t "$image:$IMAGE_TAG" -t "$image:latest" -f Canary-backend/Dockerfile Canary-backend/
           docker push "$image:$IMAGE_TAG"
           docker push "$image:latest"
 
       - name: Build and push worker
         run: |
           image="$ECR_REGISTRY/codecanary/worker"
-          docker build -t "$image:$IMAGE_TAG" -t "$image:latest" -f worker/Dockerfile worker/
+          docker build -t "$image:$IMAGE_TAG" -t "$image:latest" -f Canary-worker/Dockerfile Canary-worker/
           docker push "$image:$IMAGE_TAG"
           docker push "$image:latest"
 
       - name: Build and push frontend
         run: |
           image="$ECR_REGISTRY/codecanary/frontend"
-          docker build -t "$image:$IMAGE_TAG" -t "$image:latest" -f frontend/Dockerfile .
+          docker build -t "$image:$IMAGE_TAG" -t "$image:latest" -f Canary-frontend/Dockerfile .
           docker push "$image:$IMAGE_TAG"
           docker push "$image:latest"
 

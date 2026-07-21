@@ -1,4 +1,4 @@
-/** Keep in sync with backend PipelineStepKeys.java and worker/tasks.py STEP_MENU. */
+/** Keep in sync with backend PipelineStepKeys.java and Canary-worker/.../tasks.py STEP_MENU. */
 export const PIPELINE_STEP_KEYS = {
   NVD_COLLECT: 'nvd-collect',
   NVD_LOAD: 'nvd-load',

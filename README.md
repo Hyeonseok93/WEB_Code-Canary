@@ -17,20 +17,20 @@ Required secrets before Docker: `DB_PASSWORD`, `JWT_SECRET`.
 | `VITE_ADMIN_FORAGE` | `forage` | Job monitor sub-path |
 | `VITE_DEV_API_TARGET` | `http://localhost:8080` | Local dev API proxy (`npm run dev`) |
 
-Routes read `VITE_*` via `frontend/src/constants/roostPaths.ts`. Rebuild the frontend after changing operator paths.
+Routes read `VITE_*` via `Canary-frontend/src/constants/roostPaths.ts`. Rebuild the frontend after changing operator paths.
 
 See root `.env` for the full list with comments.
 
 ## Local development
 
 ```bash
-# Frontend (from frontend/)
+# Frontend (from Canary-frontend/)
 npm ci
 npm run dev
 
 # Full stack — configure root .env, then:
-local/docker-up.cmd      # Windows
-local/docker-up.sh       # WSL / Linux
+Canary-local/docker-up.cmd      # Windows
+Canary-local/docker-up.sh       # WSL / Linux
 ```
 
 Backend API paths (`/api/auth/*`, `/api/admin/*`) stay server-side only.
@@ -40,7 +40,7 @@ Backend API paths (`/api/auth/*`, `/api/admin/*`) stay server-side only.
 ### Do not publish production URLs
 
 - Do **not** document the live operator URL in this repo, wikis, or tickets.
-- If you change `VITE_ADMIN_*`, update nginx allowlist paths to match (see `frontend/nginx.conf`).
+- If you change `VITE_ADMIN_*`, update nginx allowlist paths to match (see `Canary-frontend/nginx.conf`).
 
 ### Do not use default operator accounts
 
@@ -49,4 +49,4 @@ Backend API paths (`/api/auth/*`, `/api/admin/*`) stay server-side only.
 
 ### Nginx IP allowlist (production)
 
-Restrict operator SPA paths (`VITE_ADMIN_*`) and `/api/auth/login`, `/api/admin/**` to trusted IPs. See commented examples in `frontend/nginx.conf`.
+Restrict operator SPA paths (`VITE_ADMIN_*`) and `/api/auth/login`, `/api/admin/**` to trusted IPs. See commented examples in `Canary-frontend/nginx.conf`.

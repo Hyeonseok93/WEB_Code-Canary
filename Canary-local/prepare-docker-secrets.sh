@@ -42,4 +42,4 @@ write_secret "$SECRETS_DIR/db_password" "$DB_PASSWORD"
 write_secret "$SECRETS_DIR/jwt_secret" "$JWT_SECRET"
 write_secret "$SECRETS_DIR/redis_password" "$REDIS_PASSWORD"
 
-echo "Docker secrets prepared in local/.docker-secrets/"
+echo "Docker secrets prepared in Canary-local/.docker-secrets/"

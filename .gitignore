@@ -4,8 +4,8 @@
 
 # Compose secrets (generated from .env — never commit)
 .docker-secrets/
-local/.docker-secrets/*
-!local/.docker-secrets/.gitignore
+Canary-local/.docker-secrets/*
+!Canary-local/.docker-secrets/.gitignore
 
 /data/
 __pycache__/
@@ -17,8 +17,6 @@ logs/
 2._Web*
 
 docs/*
-!docs/security/
-!docs/security/**
 
 # Terraform
 .terraform/

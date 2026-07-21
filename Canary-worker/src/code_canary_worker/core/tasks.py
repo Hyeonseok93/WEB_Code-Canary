@@ -13,7 +13,7 @@ TaskHandler = Callable[[], None]
 
 _TASKS: dict[str, TaskHandler] = {}
 
-# Menu digit -> step key (keep in sync with frontend/constants/pipelineStepKeys.ts)
+# Menu digit -> step key (keep in sync with Canary-frontend/src/constants/pipelineStepKeys.ts)
 MENU_SECTIONS: list[tuple[str, list[tuple[str, str]]]] = [
     (
         "NVD",

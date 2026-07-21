@@ -1,8 +1,8 @@
 """
 Poll management.pipeline_jobs and execute pipeline steps.
 
-Docker (default): worker service runs `code-canary-worker` via local compose / docker-up.
-Local: from repo root, `pip install -e worker` then `code-canary-worker` or `code-canary-cli`.
+Docker (default): worker service runs `code-canary-worker` via Canary-local compose / docker-up.
+Local: from repo root, `pip install -e Canary-worker` then `code-canary-worker` or `code-canary-cli`.
 """
 
 from __future__ import annotations

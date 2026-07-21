@@ -14,6 +14,6 @@ import java.util.List;
 @Setter
 public class TrustedProxyProperties {
 
-    /** Empty by default — X-Real-IP is trusted only when explicitly configured (see local/docker-compose.yml). */
+    /** Empty by default — X-Real-IP is trusted only when explicitly configured (see Canary-local/docker-compose.yml). */
     private List<String> cidrs = new ArrayList<>();
 }

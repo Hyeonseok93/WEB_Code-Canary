@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Prepares Docker secrets from repo-root .env, then runs local/docker-compose.yml."""
+"""Prepares Docker secrets from repo-root .env, then runs Canary-local/docker-compose.yml."""
 
 from __future__ import annotations
 

@@ -1,5 +1,5 @@
-# Local development stack only — CI/CD uses ECS + Terraform (see infra/).
-# Run from repo root: local/docker-up.cmd  or  local/docker-up.sh
+# Local development stack only — CI/CD uses ECS + Terraform (see Canary-infra/).
+# Run from repo root: Canary-local/docker-up.cmd  or  Canary-local/docker-up.sh
 
 services:
   db:
@@ -49,7 +49,7 @@ services:
 
   backend:
     build:
-      context: ../backend
+      context: ../Canary-backend
       dockerfile: Dockerfile
     container_name: codecanary-backend
     env_file:
@@ -95,7 +95,7 @@ services:
 
   worker:
     build:
-      context: ../worker
+      context: ../Canary-worker
       dockerfile: Dockerfile
     container_name: codecanary-worker
     env_file:
@@ -132,7 +132,7 @@ services:
   frontend:
     build:
       context: ..
-      dockerfile: frontend/Dockerfile
+      dockerfile: Canary-frontend/Dockerfile
     container_name: codecanary-frontend
     ports:
       - "127.0.0.1:${FRONTEND_HOST_PORT:-80}:8080"

@@ -6,7 +6,7 @@ from pathlib import Path
 
 
 def worker_root() -> Path:
-    """Directory containing worker/pyproject.toml."""
+    """Directory containing Canary-worker/pyproject.toml."""
     current = Path(__file__).resolve()
     for parent in current.parents:
         if (parent / "pyproject.toml").is_file():
@@ -15,5 +15,5 @@ def worker_root() -> Path:
 
 
 def repo_root() -> Path:
-    """Monorepo root (parent of worker/)."""
+    """Monorepo root (parent of Canary-worker/)."""
     return worker_root().parent
