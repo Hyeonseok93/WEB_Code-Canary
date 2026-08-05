@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu
 
-CONF="/etc/nginx/nginx.conf"
+CONF="/tmp/nginx.conf"
 CIDRS="${NGINX_OPERATOR_CIDRS:-}"
 
 if [ -n "$CIDRS" ]; then
@@ -28,5 +28,5 @@ awk -v geo="$GEO" -v deny="$DENY" '
   gsub(/# OPERATOR_DENY_INSERT/, deny);
   print
 }
-' "$CONF" > /tmp/nginx.conf
-mv /tmp/nginx.conf "$CONF"
+' "$CONF" > /tmp/nginx.conf.new
+mv /tmp/nginx.conf.new "$CONF"

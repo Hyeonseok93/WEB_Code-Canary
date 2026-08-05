@@ -18,10 +18,14 @@ FROM nginxinc/nginx-unprivileged:stable-alpine@sha256:37f356a5eba5d187365b4f59cd
 
 COPY --chown=nginx:nginx --from=build /app/Canary-frontend/dist /usr/share/nginx/html
 COPY Canary-frontend/nginx.conf /etc/nginx/nginx.conf
-COPY Canary-frontend/docker-entrypoint.d/30-backend-upstream.sh /docker-entrypoint.d/30-backend-upstream.sh
-COPY Canary-frontend/docker-entrypoint.d/35-real-ip.sh /docker-entrypoint.d/35-real-ip.sh
-COPY Canary-frontend/docker-entrypoint.d/40-hsts.sh /docker-entrypoint.d/40-hsts.sh
-COPY Canary-frontend/docker-entrypoint.d/50-operator-allowlist.sh /docker-entrypoint.d/50-operator-allowlist.sh
-RUN chmod +x /docker-entrypoint.d/30-backend-upstream.sh /docker-entrypoint.d/35-real-ip.sh /docker-entrypoint.d/40-hsts.sh /docker-entrypoint.d/50-operator-allowlist.sh
+# --chmod avoids RUN chmod (fails on Windows Docker bind/NTFS builds)
+COPY --chmod=755 Canary-frontend/docker-entrypoint.d/00-seed-nginx-conf.sh /docker-entrypoint.d/00-seed-nginx-conf.sh
+COPY --chmod=755 Canary-frontend/docker-entrypoint.d/30-backend-upstream.sh /docker-entrypoint.d/30-backend-upstream.sh
+COPY --chmod=755 Canary-frontend/docker-entrypoint.d/35-real-ip.sh /docker-entrypoint.d/35-real-ip.sh
+COPY --chmod=755 Canary-frontend/docker-entrypoint.d/40-hsts.sh /docker-entrypoint.d/40-hsts.sh
+COPY --chmod=755 Canary-frontend/docker-entrypoint.d/50-operator-allowlist.sh /docker-entrypoint.d/50-operator-allowlist.sh
+
+# Entrypoints edit /tmp/nginx.conf (tmpfs); nginx must load that path.
+CMD ["nginx", "-g", "daemon off;", "-c", "/tmp/nginx.conf"]
 
 EXPOSE 8080

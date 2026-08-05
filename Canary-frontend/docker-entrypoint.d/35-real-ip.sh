@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu
 
-CONF="/etc/nginx/nginx.conf"
+CONF="/tmp/nginx.conf"
 CIDRS="${NGINX_TRUSTED_PROXY_CIDRS:-}"
 
 if [ -n "$CIDRS" ]; then
@@ -23,5 +23,5 @@ fi
 awk -v real_ip="$REAL_IP" '{
   gsub(/# REAL_IP_INSERT/, real_ip);
   print
-}' "$CONF" > /tmp/nginx.conf
-mv /tmp/nginx.conf "$CONF"
+}' "$CONF" > /tmp/nginx.conf.new
+mv /tmp/nginx.conf.new "$CONF"
