@@ -34,6 +34,11 @@ $$ LANGUAGE plpgsql IMMUTABLE;
 CREATE OR REPLACE FUNCTION silver.normalize_cvss_version(p_metric_key TEXT)
 RETURNS TEXT AS $$
 BEGIN
+    -- Non-CVSS metric keys (e.g. ssvcV203) must not be coerced into cvss_version.
+    IF p_metric_key IS NULL OR p_metric_key NOT LIKE 'cvssMetric%' THEN
+        RETURN NULL;
+    END IF;
+
     RETURN CASE p_metric_key
         WHEN 'cvssMetricV40' THEN '4.0'
         WHEN 'cvssMetricV31' THEN '3.1'
@@ -232,6 +237,7 @@ BEGIN
     IF NOT p_initial_load THEN
         DELETE FROM silver.cve_descriptions     WHERE cve_id IN (SELECT cve_id FROM tmp_nvd_batch);
         DELETE FROM silver.cve_metrics          WHERE cve_id IN (SELECT cve_id FROM tmp_nvd_batch);
+        DELETE FROM silver.cve_ssvc             WHERE cve_id IN (SELECT cve_id FROM tmp_nvd_batch);
         DELETE FROM silver.cve_references       WHERE cve_id IN (SELECT cve_id FROM tmp_nvd_batch);
         DELETE FROM silver.cve_weaknesses       WHERE cve_id IN (SELECT cve_id FROM tmp_nvd_batch);
         DELETE FROM silver.cve_configurations   WHERE cve_id IN (SELECT cve_id FROM tmp_nvd_batch);
@@ -245,6 +251,7 @@ BEGIN
     FROM tmp_nvd_batch b,
          jsonb_array_elements(COALESCE(b.raw_content->'descriptions', '[]'::JSONB)) AS desc_elem;
 
+    -- CVSS only (exclude SSVC / other non-CVSS metric keys)
     INSERT INTO silver.cve_metrics (
         cve_id, cvss_version, source, type, vector_string,
         base_score, base_severity, attack_vector, attack_complexity,
@@ -275,7 +282,44 @@ BEGIN
             ))
     FROM tmp_nvd_batch b,
          jsonb_each(COALESCE(b.raw_content->'metrics', '{}'::JSONB)) AS mk(key, val),
-         jsonb_array_elements(val) AS metric_item;
+         jsonb_array_elements(val) AS metric_item
+    WHERE mk.key LIKE 'cvssMetric%';
+
+    -- CISA SSVC (metrics.ssvcV203, …) — separate from CVSS
+    INSERT INTO silver.cve_ssvc (
+        cve_id, source, ssvc_version, role,
+        exploitation, automatable, technical_impact,
+        assessed_at, ssvc_data
+    )
+    SELECT
+        b.cve_id,
+        ssvc_item->>'source',
+        ssvc_item->'ssvcData'->>'version',
+        ssvc_item->'ssvcData'->>'role',
+        (
+            SELECT elem->>'exploitation'
+            FROM jsonb_array_elements(COALESCE(ssvc_item->'ssvcData'->'options', '[]'::JSONB)) AS elem
+            WHERE elem ? 'exploitation'
+            LIMIT 1
+        ),
+        (
+            SELECT elem->>'automatable'
+            FROM jsonb_array_elements(COALESCE(ssvc_item->'ssvcData'->'options', '[]'::JSONB)) AS elem
+            WHERE elem ? 'automatable'
+            LIMIT 1
+        ),
+        (
+            SELECT elem->>'technicalImpact'
+            FROM jsonb_array_elements(COALESCE(ssvc_item->'ssvcData'->'options', '[]'::JSONB)) AS elem
+            WHERE elem ? 'technicalImpact'
+            LIMIT 1
+        ),
+        NULLIF(ssvc_item->'ssvcData'->>'timestamp', '')::TIMESTAMPTZ,
+        COALESCE(ssvc_item->'ssvcData', '{}'::JSONB)
+    FROM tmp_nvd_batch b,
+         jsonb_each(COALESCE(b.raw_content->'metrics', '{}'::JSONB)) AS mk(key, val),
+         jsonb_array_elements(val) AS ssvc_item
+    WHERE mk.key LIKE 'ssvc%';
 
     INSERT INTO silver.cve_references (cve_id, url, source, tags)
     SELECT

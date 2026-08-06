@@ -108,7 +108,24 @@ CREATE INDEX IF NOT EXISTS idx_silver_metrics_score ON silver.cve_metrics(base_s
 CREATE INDEX IF NOT EXISTS idx_silver_metrics_vector ON silver.cve_metrics(attack_vector);
 CREATE INDEX IF NOT EXISTS idx_silver_metrics_interaction ON silver.cve_metrics(user_interaction);
 
--- [1.8] cve_configurations
+-- [1.8] cve_ssvc (CISA SSVC prioritization; not CVSS)
+CREATE TABLE IF NOT EXISTS silver.cve_ssvc (
+    id BIGSERIAL PRIMARY KEY,
+    cve_id VARCHAR(30) NOT NULL REFERENCES silver.cve_vulnerabilities(id) ON DELETE CASCADE,
+    source VARCHAR(100),                          -- assessment provider UUID / id
+    ssvc_version VARCHAR(20),                     -- e.g. 2.0.3
+    role VARCHAR(100),                            -- e.g. CISA Coordinator
+    exploitation VARCHAR(50),                     -- none / poc / active ...
+    automatable VARCHAR(50),                      -- yes / no
+    technical_impact VARCHAR(50),                 -- partial / total
+    assessed_at TIMESTAMPTZ,                      -- ssvcData.timestamp
+    ssvc_data JSONB,                              -- full ssvcData object
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+CREATE INDEX IF NOT EXISTS idx_silver_ssvc_cve_id ON silver.cve_ssvc(cve_id);
+CREATE INDEX IF NOT EXISTS idx_silver_ssvc_exploitation ON silver.cve_ssvc(exploitation);
+
+-- [1.9] cve_configurations
 CREATE TABLE IF NOT EXISTS silver.cve_configurations (
     id BIGSERIAL PRIMARY KEY,
     cve_id VARCHAR(30) NOT NULL REFERENCES silver.cve_vulnerabilities(id) ON DELETE CASCADE,

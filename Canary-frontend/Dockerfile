@@ -24,6 +24,14 @@ COPY --chmod=755 Canary-frontend/docker-entrypoint.d/30-backend-upstream.sh /doc
 COPY --chmod=755 Canary-frontend/docker-entrypoint.d/35-real-ip.sh /docker-entrypoint.d/35-real-ip.sh
 COPY --chmod=755 Canary-frontend/docker-entrypoint.d/40-hsts.sh /docker-entrypoint.d/40-hsts.sh
 COPY --chmod=755 Canary-frontend/docker-entrypoint.d/50-operator-allowlist.sh /docker-entrypoint.d/50-operator-allowlist.sh
+# Strip Windows CRLF so Alpine can exec entrypoint scripts.
+USER root
+RUN sed -i 's/\r$//' /docker-entrypoint.d/00-seed-nginx-conf.sh \
+        /docker-entrypoint.d/30-backend-upstream.sh \
+        /docker-entrypoint.d/35-real-ip.sh \
+        /docker-entrypoint.d/40-hsts.sh \
+        /docker-entrypoint.d/50-operator-allowlist.sh
+USER nginx
 
 # Entrypoints edit /tmp/nginx.conf (tmpfs); nginx must load that path.
 CMD ["nginx", "-g", "daemon off;", "-c", "/tmp/nginx.conf"]
