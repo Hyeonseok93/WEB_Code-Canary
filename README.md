@@ -27,6 +27,7 @@ React에서 취약점 탐색·차트·운영자 UI를 제공하고, Spring Boot�
 
 ## 🛠 Built With
 
+<div align="center">
 <p>
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset=".github/readme/badges/dark/typescript.png">
@@ -73,7 +74,6 @@ React에서 취약점 탐색·차트·운영자 UI를 제공하고, Spring Boot�
   <source media="(prefers-color-scheme: light)" srcset=".github/readme/badges/light/recharts.png">
   <img src=".github/readme/badges/dark/recharts.png" alt="Recharts" height="28" />
 </picture>
-<br>
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset=".github/readme/badges/dark/java.png">
   <source media="(prefers-color-scheme: light)" srcset=".github/readme/badges/light/java.png">
@@ -119,7 +119,6 @@ React에서 취약점 탐색·차트·운영자 UI를 제공하고, Spring Boot�
   <source media="(prefers-color-scheme: light)" srcset=".github/readme/badges/light/python.png">
   <img src=".github/readme/badges/dark/python.png" alt="Python" height="28" />
 </picture>
-<br>
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset=".github/readme/badges/dark/docker.png">
   <source media="(prefers-color-scheme: light)" srcset=".github/readme/badges/light/docker.png">
@@ -141,6 +140,7 @@ React에서 취약점 탐색·차트·운영자 UI를 제공하고, Spring Boot�
   <img src=".github/readme/badges/dark/githubactions.png" alt="GitHub Actions" height="28" />
 </picture>
 </p>
+</div>
 
 <details>
 <summary><strong>기술 스택 상세 보기</strong></summary>
