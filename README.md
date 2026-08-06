@@ -224,14 +224,10 @@ React에서 취약점 탐색·차트·운영자 UI를 제공하고, Spring Boot�
 
 ## 🖥️ Preview
 
-> 스크린샷 준비 중
-
 <div align="center">
 
-<!-- TODO: preview images
-  <img src=".github/readme/preview-explorer.png" alt="Code Canary Explorer" width="900" />
-  <p>Explorer — 취약점 검색·상세</p>
--->
+<img src=".github/readme/preview.png" alt="Code Canary Dashboard" width="900" />
+<p>Dashboard — NVD/OSV 통합 인텔리전스 · 메트릭 · KEV</p>
 
 <table align="center">
   <thead>
@@ -315,6 +311,7 @@ WEB_Code-Canary/
 ┃   ┣━━ 📂 workflows/                     # CI · Deploy (ECR + ECS)
 ┃   ┗━━ 📂 readme/                        # README 에셋 (logo · badges · infra)
 ┃       ┣━━ 🖼️ logo.png
+┃       ┣━━ 🖼️ preview.png
 ┃       ┣━━ 🖼️ Code-Canary-architecture.drawio.png
 ┃       ┗━━ 📂 badges/{dark,light}/
 ┣━━ 📂 Canary-frontend/                   # React Explorer · Operator SPA
