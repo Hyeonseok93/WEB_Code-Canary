@@ -222,7 +222,7 @@ React에서 취약점 탐색·차트·운영자 UI를 제공하고, Spring Boot�
 
 ---
 
-## 🖥️ Preview · [자세히 보기](https://bulldog93.tistory.com/58)
+## 🖥️ Preview · [자세히 보기](https://hyeonseok93.github.io/posts/code-canary/)
 
 <div align="center">
 
@@ -299,7 +299,7 @@ PostgreSQL을 **management · bronze · silver · gold** 스키마로 나누고,
 </p>
 -->
 
-> 상세 ERD·API·보안 경계·Medallion 설계 기록은 [기술 블로그(Code Canary)](https://bulldog93.tistory.com/58)에서 다룹니다.
+> 상세 ERD·API·보안 경계·Medallion 설계 기록은 [기술 블로그(Code Canary)](https://hyeonseok93.github.io/posts/code-canary/)에서 다룹니다.
 
 ---
 
@@ -349,7 +349,7 @@ WEB_Code-Canary/
 
 **Route53 → CloudFront/WAF(옵션) → ALB → ECS Fargate(FE Nginx → BE · Worker) + RDS · Redis · EFS** 구조입니다. Private egress는 NAT(+EIP) → IGW, Backend 발견은 Cloud Map, 시크릿은 Secrets Manager, 로그는 CloudWatch입니다. 배포는 **GitHub Actions → ECR → ECS rolling deploy** 입니다.
 
-> HTTPS / CloudFront / WAF / operator CIDR은 go-live 시 Terraform tfvars에서 켭니다. VPC·Private 서브넷·Secrets Manager·ECS rolling deploy 등 상세한 설계 의도는 [기술 블로그](https://bulldog93.tistory.com/58)에서 다룹니다.
+> HTTPS / CloudFront / WAF / operator CIDR은 go-live 시 Terraform tfvars에서 켭니다. VPC·Private 서브넷·Secrets Manager·ECS rolling deploy 등 상세한 설계 의도는 [기술 블로그](https://hyeonseok93.github.io/posts/code-canary/)에서 다룹니다.
 
 ---
 
